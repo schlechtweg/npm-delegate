@@ -115,11 +115,11 @@ function rebase ( pathBase, path ) {
   console.log ('path: ' + pathBase, path );
 
   if ( pathBase != '/registry' ) {
-    return path.replace ( '/registry', '' )
+    return path.replace ( '/registry', '' ).toLowerCase();
   }
 
   if ( path.indexOf ( '/registry' ) != 0 ) {
-    return '/registry' + path;
+    return '/registry' + path.toLowerCase();
   }
 }
 
