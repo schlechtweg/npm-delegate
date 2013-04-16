@@ -79,7 +79,8 @@ function delegate ( req, resOut ) {
 
 function forward ( reqIn, registry, cb ) {
   var reqOut = {
-    hostname: registry.hostname, port: registry.port, path: rebase ( registry.path, reqIn.url ), headers: reqIn.headers, method: reqIn.method, auth: registry.auth
+//    hostname: registry.hostname, port: registry.port, path: rebase ( registry.path, reqIn.url ), headers: reqIn.headers, method: reqIn.method, auth: registry.auth
+    hostname: registry.hostname, port: registry.port, path: rebase2 ( registry.path, reqIn.url ), headers: reqIn.headers, method: reqIn.method, auth: registry.auth
   };
   delete reqOut.headers.host;
   delete reqOut.headers.authorization;
@@ -121,6 +122,11 @@ function rebase ( pathBase, path ) {
   if ( path.indexOf ( '/registry' ) != 0 ) {
     return '/registry' + path;
   }
+}
+
+function rebase2 ( pathBase, path ) {
+  console.log ( pathBase, path );
+  return pathBase + path;
 }
 
 
