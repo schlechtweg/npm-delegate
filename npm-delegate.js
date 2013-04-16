@@ -112,7 +112,7 @@ function copyHeaders ( resFrom, resTo ) {
 
 
 function rebase ( pathBase, path ) {
-  console.log ( pathBase, path );
+  console.log ('path: ' + pathBase, path );
 
   if ( pathBase != '/registry' ) {
     return path.replace ( '/registry', '' )
