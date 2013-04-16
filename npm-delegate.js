@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-var optimist = require('optimist')
-var fallback = require('fallback')
-var http = require('http')
-var https = require('https')
-var url = require('url2')
+var optimist = require('optimist');
+var fallback = require('fallback');
+var http = require('http');
+var https = require('https');
+var url = require('url2');
 
 var argv = optimist
   .usage('Compose multiple npm registries in fallback order.\nUsage: $0 [opts] host1/registry host2/registry ... hostN/registry')
@@ -20,10 +20,10 @@ var argv = optimist
   })
   .argv;
 
-var registries = argv._.map(parseRegistry)
+var registries = argv._.map(parseRegistry);
 
 function parseRegistry(string) {
-  var parsed = url.parse(string)
+  var parsed = url.parse(string);
   if (!/http(s?):/.test(parsed.protocol))
     die('invalid registry address: specify a protocol (eg https://): ' + string)
 
@@ -90,7 +90,7 @@ function forward(reqIn, registry, cb) {
   delete reqOut.headers.authorization
 
 
-  console.log('fwd req', reqOut)
+  //console.log('fwd req', reqOut);
   reqOut = (/https/.test(reqOut.protocol) ? https : http).request(reqOut, function (res) {
     console.log('res received')
     if (res.statusCode >= 400) {
