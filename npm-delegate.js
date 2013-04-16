@@ -85,7 +85,7 @@ function forward ( reqIn, registry, cb ) {
   delete reqOut.headers.authorization;
 
 
-  //console.log('fwd req', reqOut);
+  console.log(' ### fwd req', reqOut);
   reqOut = (/https/.test ( reqOut.protocol ) ? https : http).request ( reqOut,function ( res ) {
     console.log ( 'res received' );
     if ( res.statusCode >= 400 ) {
