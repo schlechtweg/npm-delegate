@@ -84,6 +84,8 @@ function forward ( reqIn, registry, cb ) {
   delete reqOut.headers.host;
   delete reqOut.headers.authorization;
   delete reqOut.headers['x-forwarded-server'];
+  delete reqOut.headers['x-forwarded-for'];
+  delete reqOut.headers['x-forwarded-host'];
 
 
   console.log(' ### fwd req', reqOut);
