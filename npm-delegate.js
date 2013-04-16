@@ -112,14 +112,14 @@ function copyHeaders ( resFrom, resTo ) {
 
 
 function rebase ( pathBase, path ) {
-  console.log ('path: ' + pathBase, path );
+  console.log ( pathBase, path );
 
   if ( pathBase != '/registry' ) {
-    return path.replace ( '/registry_internal', '' );
+    return path.replace ( '/registry', '' )
   }
 
   if ( path.indexOf ( '/registry' ) != 0 ) {
-    return '/registry_internal' + path;
+    return '/registry' + path;
   }
 }
 
