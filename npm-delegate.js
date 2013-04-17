@@ -81,6 +81,10 @@ function forward ( reqIn, registry, cb ) {
   var reqOut = {
     hostname: registry.hostname, port: registry.port, path: rebase ( registry.path, reqIn.url ), headers: reqIn.headers, method: reqIn.method, auth: registry.auth
   };
+  var xForwardedServer = reqOut.headers['x-forwarded-server'];
+  var xForwardedFor = reqOut.headers['x-forwarded-for'];
+  var xForwardedHost = reqOut.headers['x-forwarded-host'];
+
   delete reqOut.headers.host;
   delete reqOut.headers.authorization;
   delete reqOut.headers['x-forwarded-server'];
@@ -89,13 +93,26 @@ function forward ( reqIn, registry, cb ) {
 
 
   console.log(' ### fwd req', reqOut);
-  reqOut = (/https/.test ( reqOut.protocol ) ? https : http).request ( reqOut,function ( res ) {
+  reqOut = (/https/.test ( reqOut.protocol ) ? https : http).request (reqOut,function ( res ) {
     console.log ( 'res received' );
     if ( res.statusCode >= 400 ) {
       console.log ( 'bad response from ' + registry.hostname + ' ' + res.statusCode );
       res.pipe ( process.stdout );
       return cb ( new Error ( 'Response from ' + registry.hostname + ': ' + res.statusCode ) )
     }
+
+    if (xForwardedServer) {
+      res.headers['x-forwarded-server'] = xForwardedServer;
+    }
+
+    if (xForwardedFor) {
+      res.headers['x-forwarded-for'] = xForwardedFor;
+    }
+
+    if (xForwardedHost) {
+      res.headers['x-forwarded-host'] = xForwardedHost;
+    }
+
     return cb ( null, res );
   } ).on ( 'error', cb );
   reqOut.end ();
